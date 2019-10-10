@@ -11,7 +11,7 @@ If you write a line of code, you should test it.  If you don't test it, you must
 
 But if it's important enough to write and test, then it's worth thinking about that code's cyclomatic complexity.  The following method has cyclomatic complexity of five.  That's five possible paths through the code and a minimum of five test cases to be written.
 
-```
+```go
 func (s sesReportEmailer) generateEmail(report []byte, date string) (string, error) {
 	emailBody, err := s.partCreate.CreatePart(body)
 	if err != nil {
@@ -46,7 +46,7 @@ So when we decide to let errors slide, we must be prepared to cope with panics w
 
 Check out the refactored version of `generateEmail` below.  It has a cyclomatic complexity of one, with a minimum of one test case to be written.  Additionally, it is actually more robust than the first version in that it is guaranteed not panic due to nil pointers.
 
-```
+```go
 func (s sesReportEmailer) generateEmail(report []byte, date string) (string, error) {
 	defer func() { recover() }()
 

@@ -10,7 +10,7 @@ Unit test coverage is an interesting topic.
 At times in the past, individuals and organizations have fetishized high coverage numbers.  This is misguided, as high coverage can be attained without a single meaningful assertion in the test suite.
 
 Here's an example in go.  Imagine a codebase like this:
-```
+```go
 import (
 	"errors"
 	"fmt"
@@ -49,7 +49,7 @@ func doComplicatedLogic() (int, error) {
 ```
 
 This test will bring it to 100% coverage without finding a single one of the latent bugs:
-```
+```go
 import (
 	"testing"
 )

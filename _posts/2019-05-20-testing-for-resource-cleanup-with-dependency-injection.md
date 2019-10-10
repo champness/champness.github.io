@@ -8,7 +8,7 @@ author: Jacob
 Testing can be hard.  Sometimes we just have to structure things differently.  
 
 Here's an example where we need to clean up a resource:
-```
+```go
 import (
 	"fmt"
 	"io"
@@ -28,7 +28,7 @@ func getSomeResourceThatNeedsToBeClosed() io.Closer {
 ```
 
 And here's a first shot at testing it:
-```
+```go
 import (
 	"testing"
 
@@ -49,7 +49,7 @@ The way this code is currently structured, there's no good*, easy way to verify 
 
 Here, we introduce `service` as a central object for our system, having a `closerGetter` member, and we give `f` a `service` object receiver.  During startup a `service` object will be instantiated with a `closerGetter`.  We can do the same in tests, such that we can make assertions about subsequent calls on the value returned from calling `getSomeResourceThatNeedsToBeClosed`.  Let's look at that below:
 
-```
+```go
 import (
 	"io"
 )
@@ -69,7 +69,7 @@ func (s service) f() error {
 
 In the updated test below, we introduce `fakeCloserGetter` and inject it into the instantiation of the `service` object.  `fakeCloserGetter` closes over the local state of `resourceClosed` such that we can observe side-effects upon it.  Now when we call `f` on our `service` instance, `s`, we can go on to make an assertion that `resourceClosed` is true, proving that the `Close` was called on resource.  
 
-```
+```go
 import (
 	"io"
 	"testing"

@@ -11,7 +11,7 @@ Dependency injection facilitates replacing real collaborators in production with
 
 Say you're adding tests to an API endpoint that makes a library call to a look up data from a datastore.  The existing code calls a library function directly in the handler for the endpoint. 
 
-```
+```go
 func SomeEndpointHandler(){
    //...
    value, err := datastoreLibrary.Find(key)
@@ -27,7 +27,7 @@ Or you can refactor to use dependency injection.  Here's how:
 
 1. Introduce an interface to represent the collaborator.  In this case we'll call it `Datastore` and give it a method called `Find` taking the same arguments the library call and returning the same types:
 
-```
+```go
 type Datastore interface{
    Find (string) (string, err)
 }
@@ -35,7 +35,7 @@ type Datastore interface{
 
 2. Introduce the core object as the injection point.  Attach your existing endpoint handler to it, and replace the library call with a call to the injected dependency.  Here we create a new struct called Server with a `Datastore` field:
 
-```
+```go
 type Server struct{
    datastore Datastore
 }
@@ -49,7 +49,7 @@ func (s Server) SomeEndpointHandler(){
 
 3. Now we can introduce a new struct to represent the production version of the dependency, wrap the existing library call in the interface method, and inject the dependency at startup.  Here we introduce `realDatastore` to implement `Datastore` and inject it in `main`:
  
-```
+```go
 type realDatastore struct {}
 
 func (realDatastore) Find (string) (string, err){
@@ -65,7 +65,7 @@ func main(){
 
 4. In the unit tests we can use a test-double implementing the same interface.  In this case, we can test `SomeEndpointHandler` using a test-double instead of a `realDatastore`.  Here, `fakeDatastore` is guaranteed by the compiler to receive the exact same call that the `realDatastore` would and to return the exact same types: 
 
-```
+```go
 type fakeDatastore struct {}
 
 func (fakeDatastore) Find (string) (string, err){
@@ -75,7 +75,7 @@ func (fakeDatastore) Find (string) (string, err){
 
 In the happy path tests, we call `SomeEndpointHandler` on a `Server` injected with a `fakeDatastore`:
 
-```
+```go
 func TestSomeEndpointHandler_OK(){
    //...
    s := Server{datastore: fakeDatastore{}}
@@ -88,16 +88,17 @@ func TestSomeEndpointHandler_OK(){
 
 You can also easily verify the behavior of the handler when the datastore call raises an error or returns a weird value by implementing tests similar to `TestSomeEndpointHandler_OK` above, initializing `Server` with a `fakeErrorProneDatastore` or a `fakeWierdoDatastore` like these:
 
-```
+```go
 type fakeErrorProneDatastore struct {}
 func (fakeErrorProneDatastore) Find (string) (string, err){
    return "", errors.New("uh oh")
 }
 ```
-```
+
+```go
 type  fakeWierdoDatastore struct {}
 func (fakeWierdoDatastore) Find (string) (string, err){
    return "weird value", nil
 }
 ```
-There is a fair amount of duplication with all those fake datastores.  I'll show a handy way to tackle that in [another article](https://wwwin-github.cisco.com/jchampne/NotesOnCode/wiki/dry-up-your-doubles).
+There is a fair amount of duplication with all those fake datastores.  I'll show a handy way to tackle that in [another article](/2019/08/23/dry-up-your-doubles.html).

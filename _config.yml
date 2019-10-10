@@ -54,3 +54,5 @@ plugins:
 #   - vendor/ruby/
 
 show_excerpts: true
+
+highlighter: rouge
