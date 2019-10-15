@@ -40,7 +40,7 @@ func Test_f(t *testing.T) {
 }
 ```
 
-This test passes, and makes a reasonable assertion, that `f` won't return an error.  It even achieves [100% coverage](https://wwwin-github.cisco.com/jchampne/NotesOnCode/wiki/the-coverage-is-a-lie-(or-is-it%3F)).  However, it asserts nothing about whether `mustBeClosed` is closed and as a result, is vulnerable to a regression in the future.  
+This test passes, and makes a reasonable assertion, that `f` won't return an error.  It even achieves [100% coverage](/2019/05/05/the-coverage-is-a-lie.html).  However, it asserts nothing about whether `mustBeClosed` is closed and as a result, is vulnerable to a regression in the future.  
 
 To see this, imagine that the `mustBeClosed.Close()` call is inadvertently removed (while resolving a merge conflict, say) at some point in the future.  No test will complain.  We will go ahead and deploy, and only when the resource leak crashes this or some other service in production will we know there's a problem.  
 
