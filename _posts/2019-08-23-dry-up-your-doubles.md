@@ -5,7 +5,7 @@ date: 2019-08-23
 author: Jacob
 ---
 
-Dependency injection is a great way to test a system’s interactions with its external collaborators, like databases and REST APIs.  This approach is described in an earlier article ([inject you a dependency for great good](https://wwwin-github.cisco.com/jchampne/NotesOnCode/wiki/inject-you-a-dependency-for-great-good)).  
+Dependency injection is a great way to test a system’s interactions with its external collaborators, like databases and REST APIs.  This approach is described in an earlier article ([inject you a dependency for great good](/2019/07/19/inject-you-a-dependency.html)).  
 
 One rough edge in the way the approach was demonstrated in that article was that we ended up creating a lot of different single-use struct types for our various test scenarios.  To make this more concrete, let’s take the example of a method in which we need to make a call to an external datastore:
 
