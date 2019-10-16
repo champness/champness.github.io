@@ -24,7 +24,7 @@ I've used:
 - DynamoDB, AWS Athena, MongoDB, redis, Memcached, PostgreSQL, MySQL,
 and Oracle
 - Django, Rails, Backbone, Akka, and Spray
-- docker, Kubernetes, QEMU, and Vagrant
+- Docker, Kubernetes, QEMU, and Vagrant
 - Git, mercurial, SVN, CVS and Perforce
 - Linux, macOS, OSX, Solaris, HP-UX, and Windows
 
