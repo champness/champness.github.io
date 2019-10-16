@@ -5,13 +5,16 @@ date: 2019-08-23
 author: Jacob
 ---
 
-Dependency injection is a great way to test a system’s interactions with its external collaborators, like databases and REST APIs.  This approach is described in an earlier article ([inject you a dependency for great good](/2019/07/19/inject-you-a-dependency.html).  
+Dependency injection is a great way to test a system’s interactions with its external collaborators, like databases and 
+REST APIs.  This approach is described in an earlier article 
+([inject you a dependency for great good](/2019/07/19/inject-you-a-dependency.html).  
 
-One rough edge in the way the approach was demonstrated in that article was that we ended up creating a lot of different single-use struct types for our various test scenarios.  To make this more concrete, let’s take the example of a method in which we need to make a call to an external datastore:
+One rough edge in the way the approach was demonstrated in that article was that we ended up creating a lot of 
+different single-use struct types for our various test scenarios.  To make this more concrete, let’s take the example of a method in which we need to make a call to an external datastore:
 
 ```go   
-func (u Util) listTheData(id string) (string, err) {
-	results, err := u.datastore.Find(is)
+func (s Server) listTheData(id string) (string, err) {
+	results, err := s.datastore.Find(is)
 	if err == nil{
 		return “”, errors.New(“Error getting data.”)
 	}
@@ -19,7 +22,11 @@ func (u Util) listTheData(id string) (string, err) {
 }
 ```
 
-We’d like to test not only the happy path, in which we process a slice of several results, but also the error case, and the case in which we get an empty slice.  Pursuing the DI approach, we already factored out Util as a central object and injection site, and created an interface to represent the datastore and encapsulate calls on the real collaborator, so that we can use test doubles to simulate the desired behavior for each test case.  For the happy path, we might write:
+We’d like to test not only the happy path, in which we process a slice of several results, but also the error case, and 
+the case in which we get an empty slice.  Pursuing the DI approach, we already factored out `Server` as a central object 
+and injection site, and created an interface to represent the datastore and encapsulate calls on the real collaborator, 
+so that we can use test doubles to simulate the desired behavior for each test case.  For the happy path, we might 
+write:
 
 ```go
 type fakeHappyPathDatastore struct {}
@@ -42,7 +49,8 @@ func Test_listTheData(t *testing.T){
 }
 ```
 
-Next we want to verify the behavior in case of an error from the datastore.  So we make a datastore test double that raises an error: 
+Next we want to verify the behavior in case of an error from the datastore.  So we make a datastore test double that 
+raises an error: 
 
 ```go
 type fakeErrorProneDatastore struct {}
@@ -58,7 +66,7 @@ And now we can implement the test by adding another t.Run like this:
 func Test_listTheData(t *testing.T){
 	t.Run(“happy path”, func(t *testing.T){ //…
         }
-	t.Run(“error case”, func(t *testing.T){
+	t.Run(“datastore raises an error”, func(t *testing.T){
 		u := Util{datastore: fakeErrorProneDatastore{}}
 		r, e := u.foo(“xyz”)
 		assert.ErrorEqual(t, “Error getting data.”, e)
@@ -67,7 +75,8 @@ func Test_listTheData(t *testing.T){
 }
 ```
 
-Next we want to test the corner case of an empty slice without an error.  This leads us to write the following test double to be used in yet another t.Run:
+Next we want to test the corner case of an empty slice without an error.  This leads us to write the following test 
+double to be used in yet another t.Run:
 
 ```go
 type fakeEmptySliceDatastore struct {}
@@ -79,10 +88,10 @@ func (fakeEmptySliceDatastore) Find (string) ([]string, err){
 func Test_listTheData(t *testing.T){
 	t.Run(“happy path”, func(t *testing.T){ //…
         }
-	t.Run(“error case”, func(t *testing.T){ //…
+	t.Run(“datastore raises an error”, func(t *testing.T){ //…
         }
-	t.Run(“error case”, func(t *testing.T){
-		u := Util{datastore: fakeErrorProneDatastore{}}
+	t.Run(“datastore returns an empty slice”, func(t *testing.T){
+		u := Util{datastore: fakeEmptySliceDatastore{}}
 		r, e := u.foo(“xyz”)
 		assert.NoError(t, e)
 		assert.Empty(t, r)
@@ -90,9 +99,12 @@ func Test_listTheData(t *testing.T){
 }
 ```
 
-We might also like to test a number of other corner cases, like: What if we get a slice of empty strings?  What about a slice of strings that already have comma in them? What about a slice of strings with only whitespace? That's going to be a lot of different struct types!  
+We might also like to test a number of other corner cases, like: What if we get a slice of empty strings?  What about a 
+slice of strings that already have comma in them? What about a slice of strings with only whitespace? That's going to 
+be a lot of different struct types!  
 
-Here’s a handy solution for that:  We’re going to write a general-purpose test double for `datastore` and parameterize its behavior such that each test can set up the behavior it needs.  Here’s the new test double:
+Here’s a handy solution for that:  We’re going to write a general-purpose test double for `datastore` and parameterize 
+its behavior such that each test can set up the behavior it needs.  Here’s the new test double:
 
 ```go
 type fakeDatastore struct {
@@ -100,11 +112,12 @@ type fakeDatastore struct {
 }
 
 func (f fakeDatastore) Find (s string) (string, err){
-   return f.find(s)
+	return f.find(s)
 } 
 ```
 
-Note the addition of `find`, a func field, to the `fakeDatastore` type.  Now the interface method `Find` delegates to its receiver's `find`, to eliminate the other three structs and transform our test cases as follows:
+Note the addition of `find`, a func field, to the `fakeDatastore` type.  Now the interface method `Find` delegates to 
+its receiver's `find`, to eliminate the other three structs and transform our test cases as follows:
 
 ```go
 func Test_listTheData(t *testing.T){
@@ -118,7 +131,7 @@ func Test_listTheData(t *testing.T){
 		assert.Equal(t, “foo,bar,baz”, r)
 	})
 
-	t.Run(“error case”, func(t *testing.T){
+	t.Run(“datastore raises an error”, func(t *testing.T){
 		ds := fakeDatastore{find: func(string) ([]string, err){
 		   return []string{}, errors.New("uh oh")
 		}}
@@ -128,7 +141,7 @@ func Test_listTheData(t *testing.T){
 		assert.Empty(t, r)
 	})
 
-	t.Run(“empty slice”, func(t *testing.T){
+	t.Run(“datastore returns an empty slice”, func(t *testing.T){
 		ds := fakeDatastore{find: func(string) ([]string, err){
 		   return []string{}, nil
 		}}
@@ -140,6 +153,8 @@ func Test_listTheData(t *testing.T){
 }
 ```
 
-Note too, the happy side-effect that now the relevant behavior lives right there in the test.  Finally, note the amount of duplication that still remains inside of Test_listTheData.  We can solve that too, and will do just that in an upcoming article.
+Note too, the happy side-effect that now the relevant behavior lives right there in the test.  Finally, note the amount 
+of duplication that still remains inside of Test_listTheData.  We can solve that too, and will do just that in an 
+upcoming article.
 
 
