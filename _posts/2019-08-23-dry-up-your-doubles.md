@@ -14,7 +14,7 @@ different single-use struct types for our various test scenarios.  To make this 
 
 ```go   
 func (s Server) listTheData(id string) (string, err) {
-	results, err := s.datastore.Find(is)
+	results, err := s.datastore.Find(id)
 	if err == nil{
 		return “”, errors.New(“Error getting data.”)
 	}
