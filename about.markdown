@@ -7,7 +7,7 @@ permalink: /about/
 # Jacob Champness
 ### Tech Lead, Systems Engineer, Software Architect, XP/Agile Coach
 
-_hello@champness.org \|  +1 720 432 7825_
+_hello@champness.org_ |  _+1 720 432 7825_
 
 #### Technical highlights
 * Infrastructure as code with Python, Go, Terraform
@@ -50,3 +50,4 @@ Red Hat, Windows Server, C#.NET, VB.NET, Java, Oracle, SQL Server, Tomcat, Veloc
 
 #### Education: BS, Economics, Mathematics, Florida State University 
 
+_hello@champness.org_ |  _+1 720 432 7825_
