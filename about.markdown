@@ -5,7 +5,7 @@ permalink: /about/
 ---
 
 # Jacob Champness
-**Tech Lead, Systems Engineer, Software Architect, XP/Agile Coach **
+### Tech Lead, Systems Engineer, Software Architect, XP/Agile Coach
 
 _hello@champness.org \|  +1 720 432 7825_
 
