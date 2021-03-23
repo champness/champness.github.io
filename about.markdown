@@ -25,8 +25,8 @@ _hello@champness.org_ \| _+1 720 432 7825_
 #### Experience
 ##### Technical Leader -- Cisco Systems, San Jose, California (2016-present)
 Go, Python, Consul, Kubernetes, Docker, Terraform, AWS Cloudwatch, DynamoDB, Route53, Athena, Quicksight, IAM, SQS, SNS, ECS, Fargate; VegaDNS, macOS, Linux, Scrum
-- Built and operated a fleet of Consul service mesh as infrastructure-as-code on 50 global edge DCs providing critical infrastructure to Cisco’s $800M/yr cloud security business.
-- Built a geographically-distributed team across Europe and North and Central America to design and implement a microservices architecture running billing and usage reporting functions for a $5M/yr private-cloud platform with components built in Go.  Data analysis in AWS Athena and Quicksight with Python and SQL driving cost savings of $1M/yr.  
+- Built and operated a Consul service mesh fleet on 50 global edge DCs providing critical infrastructure to Cisco’s $800M/yr cloud security business.
+- Built a geographically-distributed team across Europe and North and Central America to design and implement a microservices architecture running billing and usage reporting functions for a $5M/yr private-cloud platform with components built in Go running on Kubernetes and AWS Lambda.  Data analysis in AWS Athena and Quicksight with Python and SQL driving cost savings of $1M/yr.  
 - Designed, built, and operated a microservices architecture in Go to manage the lifecycle of bare-metal hosts from initial datacenter uplift from PXE boot to OS installation and patching, to paving and decommissioning.
 
 ##### VP, Engineering -- Trip30.com, Boulder, Colorado (2013-2016)
