@@ -21,8 +21,8 @@
 title: champness.org
 email: hello@champness.org
 description: >-
-  I practice agile methods; emergent design and evolutionary architecture; test-first TDD; loose coupling; inversion of
-  control and dependency injection; and code kata.
+  Agile methods; emergent design and evolutionary architecture; test-first TDD; loose coupling; inversion of
+  control and dependency injection.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 #twitter_username: jekyllrb
