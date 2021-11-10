@@ -11,16 +11,15 @@ _hello@champness.org_ \| _+1 720 432 7825_
 
 ### Technical highlights
 * Infrastructure as code with Python, Go, Terraform
+* Docker, Kubernetes, Consul
+* DynamoDB, AWS Athena, MongoDB, redis, Memcached, PostgreSQL, MySQL, Oracle 
 * Go APIs, microservices, and infrastructure management
 * Scala systems management infrastructure, web services, and utilities 
 * Rails apps and APIs
 * JavaScript/HTML5 single-page apps 
-* Django webapps and admin utilities 
-* Cellular network control-plane protocol implementations 
-* DynamoDB, AWS Athena, MongoDB, redis, Memcached, PostgreSQL, MySQL, Oracle 
 * Django, Rails, Backbone, Akka, Spray
-* Docker, Kubernetes, Consul
-* Linux, macOS, OSX, Solaris, HP-UX, and Windows
+* Linux, macOS, OSX, Solaris, and Windows
+* Cellular network control-plane protocol implementations 
 
 ### Experience
 #### Technical Leader -- Cisco Systems, San Jose, California (2016-present)
