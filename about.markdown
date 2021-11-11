@@ -8,7 +8,8 @@ permalink: /about/
 
 ### Experienced Software and Systems Engineer, XP/Agile Coach
 
-*hello@champness.org* | *+1 720 432 7825*
+_hello@champness.org_ \| _+1 720 432 7825_
+
 
 ### Technical highlights
 
