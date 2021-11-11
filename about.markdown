@@ -25,7 +25,7 @@ _hello@champness.org_ \| _+1 720 432 7825_
 
 #### Technical Leader – Cisco Systems, San Jose, California (2016-present)
 
-*Go, Python, Consul, Kubernetes, Docker, Terraform, AWS Lambda, DynamoDB, Athena, Cloudwatch, Route53, ECS, Fargate, macOS, Linux* ,git
+*Go, Python, Consul, Kubernetes, Docker, Terraform, AWS Lambda, DynamoDB, Athena, Cloudwatch, Route53, ECS, Fargate, macOS, Linux, git*
 
 - Implemented a microservices architecture running the billing platform for a $5M/yr private-cloud platform with components built in Go running on Kubernetes and AWS Lambda. 
 - Built and operated a Consul service mesh fleet on 10 global edge DCs providing critical infrastructure to Cisco’s $800M/yr cloud security business.
